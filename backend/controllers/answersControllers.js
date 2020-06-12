@@ -1,18 +1,17 @@
 const Question = require("../models/Questions");
 const Answer = require("../models/Answers");
+const Answers = require("../models/Answers");
 
 exports.getAllAnswers = (req, res, next) => {
   Question.findById(req.params.questionId)
     .then(
       (question) => {
-          console.log(req.params.questionId);
-        console.log(question);
         Answer.find({ question: question._id })
           .then(
             (answers) => {
               res.statusCode = 200;
               res.setHeader("Content-Type", "application/json");
-              res.json(answers);
+              res.json({question, answers})
             },
             (err) => next(err)
           )
@@ -35,7 +34,7 @@ exports.postAnswers = (req, res, next) => {
             (answer) => {
               res.statusCode = 200;
               res.setHeader("Content-Type", "application/json");
-              res.json(answer);
+              res.json({question, answer})
             },
             (err) => next(err)
           )
@@ -61,7 +60,7 @@ exports.deleteAnswers = (req, res, next) => {
             (answer) => {
               res.statusCode = 200;
               res.setHeader("Content-Type", "application/json");
-              res.json(answer);
+              res.json({question, answer})
             },
             (err) => next(err)
           )
@@ -81,7 +80,7 @@ exports.getAnswer = (req, res, next) => {
             (answer) => {
               res.statusCode = 200;
               res.setHeader("Content-Type", "application/json");
-              res.json(answer);
+              res.json({question, answer})
             },
             (err) => next(err)
           )
@@ -104,7 +103,7 @@ exports.putAnswer = (req, res, next) => {
       (answer) => {
         res.statusCode = 200;
         res.setHeader("Content-Type", "application/json");
-        res.json(answer);
+        res.json({question, answer})
       }
     );
   });
@@ -119,7 +118,7 @@ exports.deleteAnswer = (req, res, next) => {
             (answer) => {
               res.statusCode = 200;
               res.setHeader("Content-Type", "application/json");
-              res.json(answer);
+              res.json({question, answer})
             },
             (err) => next(err)
           )

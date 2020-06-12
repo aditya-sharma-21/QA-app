@@ -4,11 +4,16 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const helemt = require('helmet');
+const morgon = require('morgan')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var questionRouter = require('./routes/question');
 var answerRouter = require('./routes/answer');
+const helmet = require('helmet');
 
 var app = express();
 
@@ -23,6 +28,18 @@ connect
 .catch((err) => {
   console.log(err);
 })
+
+//Enhance App Security with Helmet
+app.use(helmet());
+
+//Parser the application
+app.use(bodyParser.json());
+
+//enable all Cors request
+app.use(cors());
+
+//log HTTP requests
+app.use(morgon('combined'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
