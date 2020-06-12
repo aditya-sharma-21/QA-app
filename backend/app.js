@@ -7,14 +7,14 @@ var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var questionRouter = require('./routes/questionRouter');
-var answerRouter = require('./routes/answerRouter');
+var questionRouter = require('./routes/question');
+var answerRouter = require('./routes/answer');
 
 var app = express();
 
 //setUp database
 var url = 'mongodb://localhost:27017/qa-app';
-var connect = mongoose.connect(url);
+var connect = mongoose.connect(url, {useUnifiedTopology: true, useNewUrlParser: true});
 
 connect
 .then((db) => {
@@ -38,7 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/questions', questionRouter);
-app.use('/answers', answerRouter);
+// app.use('/questions/:questionId/answers', answerRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
